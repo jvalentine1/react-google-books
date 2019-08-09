@@ -1,0 +1,17 @@
+.my-nav-bar {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: 	#8B008B;
+    color:white;
+}
+
+.nav-link-host {
+    padding:10px;
+}
+
+#my-link {
+    color:lightgrey;
+}
+
+/* .bold-link {
+    font-weight: 800;
+} */
