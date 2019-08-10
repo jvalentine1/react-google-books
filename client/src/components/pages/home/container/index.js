@@ -8,6 +8,7 @@ import SearchBar from '../search';
 import Submit from '../submit';
 import API from "../../../../utils/API";
 import Host from '../host';
+import Bookrow from '../bookrow';
 
 class HomeContainer extends React.Component {
 
@@ -31,7 +32,7 @@ class HomeContainer extends React.Component {
     }
 
     handleBooks = () => {
-
+        console.log(this.state.books);
     }
 
     render() {
@@ -51,7 +52,14 @@ class HomeContainer extends React.Component {
                     <Host>
                     {this.state.books.map(book => {
                         return (
-                            
+                            <Bookrow 
+                            key={book.id}
+                            image={book.volumeInfo.imageLinks.thumbnail}
+                            title={book.volumeInfo.title}
+                            author={book.volumeInfo.authors}
+                            description={book.volumeInfo.description}
+                            link={book.volumeInfo.infoLink}
+                            />
                         );
                     })}
                     </Host>

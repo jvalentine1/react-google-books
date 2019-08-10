@@ -3,11 +3,7 @@ import './host.css';
 
 function Host(props) {
     return (
-        <div className="books-host">
-            <div className="col-md-12">
-                
-            </div>
-        </div>
+        <div className="container book-host">{props.children}</div>
     );
 }
 
