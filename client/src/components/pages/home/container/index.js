@@ -9,6 +9,7 @@ import Submit from '../submit';
 import API from "../../../../utils/API";
 import Host from '../host';
 import Bookrow from '../bookrow';
+import SaveBtn from '../save';
 
 class HomeContainer extends React.Component {
 
@@ -35,6 +36,28 @@ class HomeContainer extends React.Component {
         console.log(this.state.books);
     }
 
+    saveBook = id => {
+        
+        for (let i = 0; i < this.state.books.length; i++) {
+            let savedBook = this.state.books[i];
+            if (id === savedBook.id) {
+                console.log(savedBook);
+                this.postBook(savedBook);
+            }
+        }
+    }
+
+    postBook = book => {
+        API.saveBook({
+            image: book.volumeInfo.imageLinks.thumbnail,
+            title: book.volumeInfo.title,
+            description: book.volumeInfo.description,
+            link: book.volumeInfo.infoLink
+        }).then(data => {
+            console.log(data);
+        });
+    }
+
     render() {
         return (
             <Wrapper>
@@ -59,7 +82,9 @@ class HomeContainer extends React.Component {
                             author={book.volumeInfo.authors}
                             description={book.volumeInfo.description}
                             link={book.volumeInfo.infoLink}
-                            />
+                            onClick={() => this.saveBook(book.id)}
+                            >                           
+                            </Bookrow>
                         );
                     })}
                     </Host>

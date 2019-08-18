@@ -5,7 +5,7 @@ function SearchBar(props) {
     return (
         <form className="form-host">
             <div className="form-group">
-                <label>Search Authors:</label>
+                <label>Search Books:</label>
                 <input type="text" className="form-control" id="exampleFormControlInput1" {...props} placeholder="Your Search"></input>
             </div>
         </form>

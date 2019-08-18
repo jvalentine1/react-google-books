@@ -15,6 +15,8 @@ function Bookrow(props) {
                 <br></br>
                 <h3 className="descript-head">Learn More:</h3>
                 <a className="link" target="_blank" rel="noopener noreferrer" href={props.link}>{props.link}</a>
+                <br></br>
+                <button type="button" {...props} className="btn btn-outline-primary save-btn">Save</button>
             </div>
         </div>
     );
