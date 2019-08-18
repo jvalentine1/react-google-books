@@ -9,7 +9,7 @@ router.get("/books", (req, res) => {
       res.json(data.data.items);
     })
     .catch(err => res.status(422).json(err));
-    
+
 });
 
 router.post("/save", (req, res) => {
@@ -19,5 +19,21 @@ router.post("/save", (req, res) => {
     .catch(err => res.status(422).json(err));
 
 });
+
+router.get("/getsaved", (req, res) => {
+
+    db.Book.find({})
+    .then(books => res.json(books))
+    .catch(err => res.status(422).json(err));
+
+});
+
+router.delete("/delete/:id", (req, res) => {
+
+  db.Book.findById({ _id: req.params.id})
+  .then(dbModel => dbModel.remove())
+  .then(dbModel => res.json(dbModel))
+  .catch(err => res.status(422).json(err));
+})
 
 module.exports = router;

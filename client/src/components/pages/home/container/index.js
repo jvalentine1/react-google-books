@@ -9,13 +9,15 @@ import Submit from '../submit';
 import API from "../../../../utils/API";
 import Host from '../host';
 import Bookrow from '../bookrow';
-import SaveBtn from '../save';
+import Modal from '../modal';
 
 class HomeContainer extends React.Component {
 
     state = {
         query: "",
-        books: []
+        books: [],
+        modalClass: "no-modal",
+        title: ""
     }
 
     checkInput = event => {
@@ -26,7 +28,6 @@ class HomeContainer extends React.Component {
     checkQuery = event => {
         event.preventDefault();
         const search = this.state.query.toLowerCase().replace(/ +/g, "");
-        console.log(search);
         API.getBooks(search)
             .then(res => this.setState({ books: res.data }, this.handleBooks))
             .catch(err => console.log(err));
@@ -41,7 +42,6 @@ class HomeContainer extends React.Component {
         for (let i = 0; i < this.state.books.length; i++) {
             let savedBook = this.state.books[i];
             if (id === savedBook.id) {
-                console.log(savedBook);
                 this.postBook(savedBook);
             }
         }
@@ -51,16 +51,38 @@ class HomeContainer extends React.Component {
         API.saveBook({
             image: book.volumeInfo.imageLinks.thumbnail,
             title: book.volumeInfo.title,
+            author: book.volumeInfo.authors[0],
             description: book.volumeInfo.description,
             link: book.volumeInfo.infoLink
         }).then(data => {
-            console.log(data);
+            this.setState({
+                modalClass:"modal",
+                title: data.data.title
+            });
+
         });
+    }
+
+    closeModal = () => {
+        this.setState({ modalClass: "no-modal" });
+    }
+
+    checkImage = image => {
+        if(image === "undefined") {
+            return "#";
+        } else {
+            return image;
+        }
     }
 
     render() {
         return (
             <Wrapper>
+                <Modal 
+                modalclass={this.state.modalClass}
+                title={this.state.title}
+                onClick={this.closeModal}
+                />
                 <Header>
                     <TitleImage />
                 </Header>
@@ -77,9 +99,9 @@ class HomeContainer extends React.Component {
                         return (
                             <Bookrow 
                             key={book.id}
-                            image={book.volumeInfo.imageLinks.thumbnail}
+                            image={this.checkImage(book.volumeInfo.imageLinks.thumbnail)}
                             title={book.volumeInfo.title}
-                            author={book.volumeInfo.authors}
+                            author={book.volumeInfo.authors[0]}
                             description={book.volumeInfo.description}
                             link={book.volumeInfo.infoLink}
                             onClick={() => this.saveBook(book.id)}
